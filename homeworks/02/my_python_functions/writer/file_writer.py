@@ -16,6 +16,7 @@ class FileWriter:
     
     def __exit__(self, type, value, traceback):
         self.file.close()
+        self.file = None
 
     @property
     def path(self):
@@ -37,20 +38,18 @@ class FileWriter:
     
     def print_file(self):
         if self._check_path(self.path_):
-                self.file.seek(0)
-                for line in self.file:
-                    print(line)
+            self.file.seek(0)
+            for line in self.file:
+                print(line)
         else:
             print("This file does not exist")
     
     def write(self, some_string):
             self.file.write(some_string)
-
-        
+      
     def save_yourself(self, file_name):
-        print(self.file.closed)
         with open(file_name, "wb") as fn:
-            pkl.dump(self.__dict__, fn)
+            pkl.dump(self, fn)
         
     @classmethod
     def load_file_writer(cls, pickle_file):
