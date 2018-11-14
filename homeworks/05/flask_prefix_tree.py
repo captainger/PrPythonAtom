@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify, render_template
 from heap.Heap import MinHeap
 
@@ -80,10 +81,11 @@ def init_prefix_tree(filename):
     with open(filename, 'r') as fn:
         for line in fn:
             string = line.split('\t')
-            prfx_tree.add(string[0], string[1], string[2])
+            prfx_tree.add(string[0], string[1], int(string[2]))
 
 @app.route("/get_sudgest/<string>", methods=['GET', 'POST'])
 def return_sudgest(string):
+    init_prefix_tree('./data.txt')
     sudgest_top = prfx_tree.return_top(string)
     return jsonify(sudgest_top)
 
